@@ -1,1 +1,1 @@
-create-interactive-slideshow ./slides.hs && tmuxinator start slideshow
+create-interactive-slideshow ./slides.hs && tmuxinator start -p ./.slides/.slideshow.yml
