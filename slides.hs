@@ -1,9 +1,8 @@
-hi everybody
+main = do
+    putStr "Hello World!"
 
-##
+-- Slide
 
-More
-
-##
-
-weeeeee
+main = do
+    putStr "Hello World!"
+    putStr "And all that live in it!"
