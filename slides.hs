@@ -153,7 +153,7 @@ add a b = a + b
 -- const addFive = a => add(5, a)
 addFive :: Int -> Int
 addFive = add 5
-addFive' = (+ 5)
+alternateAdd5 = (+ 5)
 
 example1 = addFive 5 == 10
 
@@ -176,13 +176,13 @@ double = (* 2)
 addFive = (+ 5)
 
 main = do
-    customPipeline [0]
+    showData [0]
 
-customPipeline = putShowable . someComputation . head
+showData = putShowable . doubleAndAddFive . head
 
 putShowable = putStrLn . show
 
-someComputation = double . addFive
+doubleAndAddFive = double . addFive
 
 -- SLIDE
 
@@ -250,21 +250,18 @@ main = do
 
 
 -- SLIDE
---
+
 -- Irrelevant things about Monads!
 
 -- Lists, Maybes, Functions, and many other things are also instances of Monads
---
+
 -- SLIDE
---
+
 -- Irrelevant things about Monads!
 
 -- Lists, Maybes, Functions, and many other things are also instances of Monads
---
--- >>= means .then()
-import System.Environment (getArgs)
 
-main = getArgs >>= putStrLn . head >> putStrLn "Done!"
+-- Only IO matters
 
 -- SLIDE
 
@@ -272,12 +269,20 @@ main = getArgs >>= putStrLn . head >> putStrLn "Done!"
 
 -- Lists, Maybes, Eithers, Functions, Readers, Writers, and many other things are also instances of Monads
 
--- >>= means .then()
-import System.Environment (getArgs)
-
-main = getArgs >>= putStrLn . head >> putStrLn "Done!"
-
 -- Only IO matters
+
+-- >>= means .then()
+
+-- SLIDE
+
+-- Typeclasses
+
+-- fn = case someData of
+--            String -> implementation1
+--            Int -> implementation2
+--            HashMap -> implementation3
+
+main = undefined
 
 -- SLIDE
 
@@ -286,16 +291,19 @@ main = getArgs >>= putStrLn . head >> putStrLn "Done!"
 main = putStrLn example1
 
 -- Show instances can be turned into text
+
 -- Implements show
+
 example1 = show 10
 example2 = show "Haskell"
 
 -- SLIDE
 
 -- Monoid instances are combinable. Texts, HashMaps, Lists, etc
+
 -- Implements <>
 
-main = putStrLn example1
+main = putStrLn $ show example1
 
 example1 = [1, 2, 3] ++ [4, 5, 6]
 example2 = [1, 2, 3] <> [4, 5, 6]
@@ -305,6 +313,7 @@ example3 = "Hello " <> "World"
 -- SLIDE
 
 -- Functor instances contain data that can be changed
+
 -- Implements fmap
 
 import System.Environment (getArgs)
@@ -322,8 +331,10 @@ example4 = head <$> getArgs -- get the args, but only the first
 -- SLIDE
 
 -- Applicative instances are extentions of Functors. 
+
 -- Usually used when mapping needs get complicated.
 -- Use if a library makes you, only as they show
+
 -- Implements <*> 
 
 main = undefined
@@ -334,7 +345,8 @@ main = undefined
 -- SLIDE
 
 -- Monads we talked about
--- Implements >>=
+
+-- Implements >>= - which is the same as .then()
 
 main = do
   putStrLn "Keep it simple..."
@@ -348,20 +360,3 @@ main = do
 -- 3. Typeclasses can provide "magical" type coercing without undefined behavior
 
 main = undefined
-
--- SLIDE
-
--- Modules
-
-module Foo (convertFoo) where
-  
-import System.Environment (getArgs) -- limited imports
-import System.Environment -- global imports
-import qualified System.Environment as Env -- Imports available only as Env.func
-
-convertFoo bar = privateFunction 5 bar 
-
-privateFunction number bar = bar + number
-
-
-
